@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "572159345903",
+    "project_id": "notesbom-da420",
+    "storage_bucket": "notesbom-da420.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:572159345903:android:cb193cd65165f03492071a",
+        "android_client_info": {
+          "package_name": "com.example.myproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "572159345903-hej3d0tk28kf17f4j31jrkr3vj1b6l02.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWbaQgu7449-xOyx3aHRSqldZya7wdhAM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "572159345903-hej3d0tk28kf17f4j31jrkr3vj1b6l02.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
