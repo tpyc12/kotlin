@@ -1,16 +1,12 @@
 package com.example.myproject.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import com.example.myproject.model.Note
 import com.example.myproject.model.NoteResult
 import com.example.myproject.model.NoteResult.Error
 import com.example.myproject.model.NoteResult.Success
 import com.example.myproject.model.Repository
-import com.example.myproject.ui.BaseViewModel
-import com.example.myproject.ui.MainViewState
+import com.example.myproject.ui.states.MainViewState
 
 class MainViewModel(val repository: Repository = Repository) :
         BaseViewModel<List<Note>?, MainViewState>() {

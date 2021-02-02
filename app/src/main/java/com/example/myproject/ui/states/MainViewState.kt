@@ -1,4 +1,4 @@
-package com.example.myproject.ui
+package com.example.myproject.ui.states
 
 import com.example.myproject.model.Note
 

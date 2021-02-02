@@ -6,8 +6,7 @@ import com.example.myproject.model.NoteResult
 import com.example.myproject.model.NoteResult.Success
 import com.example.myproject.model.NoteResult.Error
 import com.example.myproject.model.Repository
-import com.example.myproject.ui.BaseViewModel
-import com.example.myproject.ui.NoteViewState
+import com.example.myproject.ui.states.NoteViewState
 
 class NoteViewModel(val repository: Repository = Repository) :
 BaseViewModel<Note?, NoteViewState>(){

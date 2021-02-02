@@ -1,4 +1,4 @@
-package com.example.myproject.ui
+package com.example.myproject.ui.activities
 
 import android.content.Context
 import android.content.Intent
@@ -10,11 +10,14 @@ import android.text.TextWatcher
 import android.view.MenuItem
 import androidx.lifecycle.ViewModelProvider
 import com.example.myproject.R
-import com.example.myproject.model.Color
+import com.example.myproject.databinding.ActivityNoteBinding
 import com.example.myproject.model.Note
+import com.example.myproject.ui.format
+import com.example.myproject.ui.getColorInt
+import com.example.myproject.ui.states.NoteViewState
 import com.example.myproject.viewmodel.NoteViewModel
-import kotlinx.android.synthetic.main.activity_note.*
 import java.util.*
+import kotlinx.android.synthetic.main.activity_main.*
 
 private const val SAVE_DELAY = 2000L
 
@@ -32,11 +35,16 @@ class NoteActivity : BaseActivity<Note?, NoteViewState>() {
 
     private var note: Note? = null
 
-    override val viewModel: NoteViewModel by lazy {
-        ViewModelProvider(this).get(NoteViewModel::class.java)
-    }
+    override val viewModel: NoteViewModel
+            by lazy {
+                ViewModelProvider(this).get(NoteViewModel::class.java)
+            }
 
     override val layoutRes: Int = R.layout.activity_note
+
+    override val ui: ActivityNoteBinding
+            by lazy { ActivityNoteBinding.inflate(layoutInflater) }
+
     private val textChangeListener = object : TextWatcher {
         override fun afterTextChanged(s: Editable?) {
             triggerSaveNote()
@@ -63,23 +71,17 @@ class NoteActivity : BaseActivity<Note?, NoteViewState>() {
     }
 
     private fun initView() {
-        titleEt.setText(note?.title ?: "")
-        bodyEt.setText(note?.note ?: "")
+        note?.run {
+            ui.toolbar.setBackgroundColor(color.getColorInt(this@NoteActivity))
 
-        val color = when (note?.color) {
-            Color.WHITE -> R.color.color_white
-            Color.VIOLET -> R.color.color_violet
-            Color.YELLOW -> R.color.color_yello
-            Color.RED -> R.color.color_red
-            Color.PINK -> R.color.color_pink
-            Color.GREEN -> R.color.color_green
-            Color.BLUE -> R.color.color_blue
-            else -> R.color.white
+            ui.titleEt.setText(title)
+            ui.bodyEt.setText(note)
+
+            supportActionBar?.title = lastChanged.format()
         }
 
-        toolbar.setBackgroundColor(resources.getColor(color))
-        titleEt.addTextChangedListener(textChangeListener)
-        bodyEt.addTextChangedListener(textChangeListener)
+        ui.titleEt.addTextChangedListener(textChangeListener)
+        ui.bodyEt.addTextChangedListener(textChangeListener)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
@@ -91,18 +93,19 @@ class NoteActivity : BaseActivity<Note?, NoteViewState>() {
     }
 
     private fun createNewNote(): Note = Note(
-            UUID.randomUUID().toString(),
-            titleEt.text.toString(),
-            bodyEt.text.toString())
+        UUID.randomUUID().toString(),
+        ui.titleEt.text.toString(),
+        ui.bodyEt.text.toString()
+    )
 
     private fun triggerSaveNote() {
-        if (titleEt.text == null || titleEt.text!!.length < 3) return
+        if (ui.titleEt.text == null || ui.titleEt.text!!.length < 3) return
 
         Handler(Looper.getMainLooper()).postDelayed({
             note = note?.copy(
-                    title = titleEt.text.toString(),
-                    note = bodyEt.text.toString(),
-                    lastChanged = Date()
+                title = ui.titleEt.text.toString(),
+                note = ui.bodyEt.text.toString(),
+                lastChanged = Date()
             ) ?: createNewNote()
 
             if (note != null) viewModel.saveChanges(note!!)
