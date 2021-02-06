@@ -8,7 +8,7 @@ import com.example.myproject.model.NoteResult.Success
 import com.example.myproject.model.Repository
 import com.example.myproject.ui.states.MainViewState
 
-class MainViewModel(val repository: Repository = Repository) :
+class MainViewModel(val repository: Repository) :
         BaseViewModel<List<Note>?, MainViewState>() {
 
     private val notesObserver = object : Observer<NoteResult> {

@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import androidx.lifecycle.ViewModelProvider
 import com.example.myproject.R
 import com.example.myproject.databinding.ActivityMainBinding
 import com.example.myproject.model.Note
@@ -15,13 +14,12 @@ import com.example.myproject.ui.MainAdapter
 import com.example.myproject.ui.states.MainViewState
 import com.example.myproject.ui.OnItemClickListener
 import com.example.myproject.viewmodel.MainViewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 import com.firebase.ui.auth.AuthUI
-import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity<List<Note>?, MainViewState>(), LogoutDialog.LogoutListener {
 
-    override val viewModel: MainViewModel
-            by lazy { ViewModelProvider(this).get(MainViewModel::class.java) }
+    override val viewModel: MainViewModel by viewModel()
 
     override val ui: ActivityMainBinding
             by lazy { ActivityMainBinding.inflate(layoutInflater) }
@@ -31,16 +29,16 @@ class MainActivity : BaseActivity<List<Note>?, MainViewState>(), LogoutDialog.Lo
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setSupportActionBar(toolbar)
+        setSupportActionBar(ui.toolbar)
 
         adapter = MainAdapter(object : OnItemClickListener {
             override fun onItemClick(note: Note) {
                 openNoteScreen(note)
             }
         })
-        mainRecycler.adapter = adapter
+        ui.mainRecycler.adapter = adapter
 
-        fab.setOnClickListener { openNoteScreen() }
+        ui.fab.setOnClickListener { openNoteScreen() }
     }
 
     override fun renderData(data: List<Note>?) {

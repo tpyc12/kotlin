@@ -5,21 +5,20 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import androidx.lifecycle.ViewModelProvider
 import com.example.myproject.R
 import com.example.myproject.databinding.ActivitySplashBinding
 import com.example.myproject.model.NoAuthException
 import com.example.myproject.ui.states.SplashViewState
 import com.example.myproject.viewmodel.SplashViewModel
 import com.firebase.ui.auth.AuthUI
+import org.koin.android.viewmodel.ext.android.viewModel
 
 private const val RC_SING_IN = 42
 private const val START_DELAY = 1000L
 
 class SplashActivity : BaseActivity<Boolean?, SplashViewState>() {
 
-    override val viewModel: SplashViewModel
-            by lazy { ViewModelProvider(this).get(SplashViewModel::class.java) }
+    override val viewModel: SplashViewModel by viewModel()
 
     override val layoutRes: Int = R.layout.activity_splash
 

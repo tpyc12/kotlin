@@ -10,4 +10,9 @@
     <string name="logout_dialog_message">Точно?</string>
     <string name="ok_bth_title">Да</string>
     <string name="logout_dialog_cancel">Отмена</string>
+    <string name="change_color_menu_title">Цвет</string>
+    <string name="delete_menu_title">Удалить</string>
+    <string name="delete_dialog_message">Delete?</string>
+    <string name="cancel_btn_title">Отмена</string>
+    <string name="new_note">Новая заметка</string>
 </resources>

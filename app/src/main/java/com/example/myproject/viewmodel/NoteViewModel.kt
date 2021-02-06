@@ -8,33 +8,45 @@ import com.example.myproject.model.NoteResult.Error
 import com.example.myproject.model.Repository
 import com.example.myproject.ui.states.NoteViewState
 
-class NoteViewModel(val repository: Repository = Repository) :
-BaseViewModel<Note?, NoteViewState>(){
+class NoteViewModel(val repository: Repository) :
+    BaseViewModel<NoteViewState.Data, NoteViewState>() {
 
-    private var pendingNote: Note? = null
+    private val currentNote: Note?
+        get() = viewStateLiveData.value?.data?.note
 
     fun saveChanges(note: Note) {
-        pendingNote = note
+        viewStateLiveData.value = NoteViewState(NoteViewState.Data(note = note))
     }
 
     override fun onCleared() {
-        if (pendingNote != null) {
-            repository.saveNote(pendingNote!!)
+        currentNote?.let { repository.saveNote(it) }
+    }
+
+    fun loadNote(noteId: String) {
+        repository.getNoteById(noteId).observeForever { t ->
+            t?.let { noteResult ->
+                viewStateLiveData.value = when (noteResult) {
+                    is Success<*> ->
+                        NoteViewState(NoteViewState.Data(note = noteResult.data as? Note))
+                    is Error ->
+                        NoteViewState(error = noteResult.error)
+                }
+            }
         }
     }
 
-    fun loadNote(noteId: String){
-        repository.getNoteById(noteId).observeForever(object : Observer<NoteResult> {
-            override fun onChanged(t: NoteResult?) {
-                if (t == null) return
-
-                when(t){
-                    is Success<*> ->
-                        viewStateLiveData.value = NoteViewState(note = t.data as? Note)
-                    is Error ->
-                        viewStateLiveData.value = NoteViewState(error = t.error)
+    fun deleteNote() {
+        currentNote?.let {
+            repository.deleteNote(it.id).observeForever { result ->
+                result?.let { noteResult ->
+                    viewStateLiveData.value = when (noteResult) {
+                        is Success<*> ->
+                            NoteViewState(NoteViewState.Data(isDeleted = true))
+                        is Error ->
+                            NoteViewState(error = noteResult.error)
+                    }
                 }
             }
-        })
+        }
     }
 }

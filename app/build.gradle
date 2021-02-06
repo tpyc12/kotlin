@@ -1,7 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-    id 'kotlin-android-extensions'
+    id 'kotlin-parcelize'
     id 'com.google.gms.google-services'
 }
 
@@ -40,6 +40,8 @@ android {
 
 dependencies {
 
+    implementation 'org.koin:koin-android:2.2.0'
+    implementation 'org.koin:koin-android-viewmodel:2.2.0'
     implementation "androidx.multidex:multidex:2.0.1"
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.2.1'
