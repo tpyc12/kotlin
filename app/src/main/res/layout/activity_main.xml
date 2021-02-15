@@ -6,7 +6,7 @@
     android:fitsSystemWindows="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.MainActivity">
+    tools:context=".ui.activities.MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
@@ -30,5 +30,18 @@
         app:spanCount="2"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:listitem="@layout/item_note"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        app:fabSize="normal"
+        android:layout_marginEnd="@dimen/button_margin"
+        android:layout_marginBottom="@dimen/button_margin"
+        app:layout_anchorGravity="bottom|end"
+        android:src="@android:drawable/ic_menu_add"
+        app:layout_anchor="@id/mainRecycler"
+        app:layout_behavior=".ui.FABBehavior"/>
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

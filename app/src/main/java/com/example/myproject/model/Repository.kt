@@ -1,28 +1,13 @@
 package com.example.myproject.model
 
-object Repository {
-    private val notes: List<Note> = listOf(
-            Note(
-                    "Моя первая заметка",
-                    "Котлин очень краткий, но при этом выразительный язык",
-                    0xfff06292.toInt()
-            ),
-            Note(
-                    "Моя вторая заметка",
-                    "Котлин очень краткий, но при этом выразительный язык",
-                    0xfff06292.toInt()
-            ),
-            Note(
-                    "Моя третья заметка",
-                    "Котлин очень краткий, но при этом выразительный язык",
-                    0xfff06292.toInt()
-            ),
-            Note(
-                    "Моя четвертая заметка",
-                    "Котлин очень краткий, но при этом выразительный язык",
-                    0xfff06292.toInt()
-            ),
-    )
+import com.example.myproject.model.providers.FireStoreProvider
+import com.example.myproject.model.providers.RemoteDataProvider
 
-    fun getNotes(): List<Note> = notes
+class Repository(private val remoteDataProvider: RemoteDataProvider) {
+
+    fun getNotes() = remoteDataProvider.subscribeToAllNotes()
+    fun saveNote(note: Note) = remoteDataProvider.saveNote(note)
+    fun getNoteById(id: String) = remoteDataProvider.getNoteById(id)
+    fun getCurrentUser() = remoteDataProvider.getCurrentUser()
+    fun deleteNote(noteId: String) = remoteDataProvider.deleteNote(noteId)
 }
